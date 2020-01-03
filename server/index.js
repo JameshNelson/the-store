@@ -18,16 +18,18 @@ app.use(session({
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
     console.log("DB")
+    const port = SERVER_PORT;
+    app.listen(port, () => console.log(`something something ${port}`))
 })
 
 //auth endpoints
 app.post('/auth/login', authCtrl.login); 
 app.post('/auth/register', authCtrl.register); 
-// app.post('/auth/logout', authCtrl.logout); 
+app.post('/auth/logout', authCtrl.logout); 
 //auth endpoints
+
+app.get('/api/products', mainCtrl.getProducts); 
 
      
 
 
-const port = SERVER_PORT;
-app.listen(port, () => console.log(`something something ${port}`))
