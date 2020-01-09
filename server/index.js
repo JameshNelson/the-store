@@ -17,9 +17,7 @@ app.use(session({
     secret: SESSION_SECRET
 }))
 
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname, '../build/'));
-});
+
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
@@ -59,3 +57,6 @@ app.post("/charge", async (req, res) => {
      
 
 
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
