@@ -1,6 +1,7 @@
 import React, {Component} from 'react'; 
 import {getProducts} from '../../redux/productsReducer'; 
 import {connect} from 'react-redux'; 
+import axios from 'axios'; 
 
 class ProductCard extends Component {
     constructor(props) {
@@ -12,6 +13,12 @@ class ProductCard extends Component {
         this.props.getProducts()
     }
 
+    addToCart = (id, price) => {
+        axios.post('/api/cart', {
+            
+        })
+    }
+
     render(){
         console.log('dashboard props', this.props.products.products)
             const products = this.props.products.products.map((product, i) => {
@@ -21,7 +28,7 @@ class ProductCard extends Component {
                     <div className='product-info'>
                         <p>{product.product_name}</p>
                         <p>Price: ${product.price}</p>
-                        <p></p>
+                        <button>Add to Cart</button>
                     </div>
                 </div>
             )

@@ -14,3 +14,18 @@ price decimal,
 product_description text,
 qty int
 );
+
+
+create table project_customer_order(
+customer_order_id serial primary key,
+customer_id int references project_customer(customer_id),
+paid boolean
+)
+
+
+create table project_order_items(
+order_item_id serial primary key
+,customer_order_id int references project_customer_order(customer_order_id)
+,product_id int references project_products(product_id)
+,qty int
+)

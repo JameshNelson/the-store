@@ -14,8 +14,12 @@ module.exports = {
         const salt = bcrypt.genSaltSync(10); 
         const hash = bcrypt.hashSync(password, salt); 
         let newUser = await db.customer.register_customer(email, hash);
-        console.log('Hit'); 
         newUser = newUser[0]; 
+        console.log(newUser.customer_id); 
+        let userCart = await db.order.create_order(newUser.customer_id)
+        userCart = userCart[0]; 
+        let sessionUser = {...newUser, ...userCart}; 
+        session.user = sessionUser; 
         session.user = newUser; 
         res.status(201).send(session.user); 
         

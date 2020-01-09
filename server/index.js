@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express'),
       massive = require('massive'),
       session = require('express-session'),
+      stripe = require('stripe')('sk_test_zSZ6vxAjKpUA3mFA8ra2q0Y2'),
       {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env,
       authCtrl = require('./authController'),
       mainCtrl = require('./mainController'),
@@ -29,7 +30,27 @@ app.post('/auth/logout', authCtrl.logout);
 //auth endpoints
 
 app.get('/api/products', mainCtrl.getProducts); 
+app.post('/api/cart', mainCtrl.addToCart); 
 
+
+//Stripe
+app.post("/charge", async (req, res) => {
+    try {
+      let {status} = await stripe.charges.create({
+        amount: 2000,
+        currency: "usd",
+        description: "An example charge",
+        source: req.body
+      });
+  
+      res.json({status});
+    } catch (err) {
+      console.log(err);
+      res.status(500).end();
+    }
+  });
+
+//Stripe
      
 
 

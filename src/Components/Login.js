@@ -21,6 +21,7 @@ class Login extends Component {
     handleLogin = () => {
         axios.post('/auth/login', {email: this.state.email, password: this.state.password}).then(res => {
             const {email, id} = res.data
+
             this.props.getUser({email, id})
             this.props.history.push('/dash')
         })
@@ -36,23 +37,34 @@ class Login extends Component {
     }
 
     render(){
+
+        console.log(this.state); 
         return(
-            <div>
-                <input 
-                    maxLength='20'
-                    placeholder='Enter Email'
-                    name='username'
-                    onChange={(event) => this.handleInput(event)}
-                    />
-                <input 
-                    type='password'
-                    maxLength='20'
-                    placeholder='Enter Password'
-                    name='password'
-                    onChange={(event) => this.handleInput(event)}
-                    />
-                    <button onClick={this.handleLogin}>LOG IN!</button>
-                    <button onClick={this.handleRegister}>REGISTER!</button>
+            <div className='login-page'>
+                <div className='login-box'>
+
+                    <div className='login-inputs'>
+                        <input 
+                            maxLength='20'
+                            placeholder='Enter Email'
+                            name='email'
+                            onChange={(event) => this.handleInput(event)}
+                            className='email-input'
+                            />
+                        <input 
+                            type='password'
+                            maxLength='20'
+                            placeholder='Enter Password'
+                            name='password'
+                            onChange={(event) => this.handleInput(event)}
+                            />
+                    </div>
+
+                    <div className="login-buttons">
+                        <button onClick={this.handleLogin} className='login-button'>Log In</button>
+                        <button onClick={this.handleRegister}>Register</button>
+                    </div>
+                </div>
             </div>
         )
     }
