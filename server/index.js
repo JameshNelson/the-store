@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express'),
+      path = require('path'); 
       massive = require('massive'),
       session = require('express-session'),
       stripe = require('stripe')('sk_test_zSZ6vxAjKpUA3mFA8ra2q0Y2'),
@@ -15,6 +16,10 @@ app.use(session({
     saveUninitialized: true,
     secret: SESSION_SECRET
 }))
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
