@@ -3,8 +3,8 @@ const express = require('express'),
       path = require('path'); 
       massive = require('massive'),
       session = require('express-session'),
-      stripe = require('stripe')('sk_test_zSZ6vxAjKpUA3mFA8ra2q0Y2'),
-      {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env,
+      stripe = require('stripe')(process.env.STRIPE_SECRET),
+      {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET, STRIPE_SECRET} = process.env,
       authCtrl = require('./authController'),
       mainCtrl = require('./mainController'),
       app = express();
@@ -37,16 +37,18 @@ app.post('/api/cart', mainCtrl.addToCart);
 
 
 //Stripe
-app.post("/charge", async (req, res) => {
+app.post("/api/payment", async (req, res) => {
+    const {token:{id},amount} = req.body;
     try {
-      let {status} = await stripe.charges.create({
-        amount: 2000,
+      let status = await stripe.charges.create({
+
+        amount: amount,
         currency: "usd",
         description: "An example charge",
-        source: req.body
+        source: id
       });
   
-      res.json({status});
+      res.status(200).send(status);
     } catch (err) {
       console.log(err);
       res.status(500).end();
