@@ -19,8 +19,31 @@ class Cart extends Component {
 
     render(){
 
-        
-        const products = this.props.products.products.map((product, i) => {
+        // { this.props.products.products.length ? 
+        // ( this.props.products.products.map((product, i) => {
+        //     return(
+
+        //         <div key={i} className='product-card'>
+        //             <img src={product.product_image} className='product-image'/>
+        //             <div className='product-info'>
+        //                 <p>{product.product_name}</p>
+        //                 <p>Price: ${product.price}</p>
+        //                 <button>Remove from Cart</button>
+        //             </div>
+        //         </div>
+        //     )
+        // })) : (null) }
+        let total = this.props.products.products.map((el) => {
+            return el.price
+        }).reduce((acc, cur) => {
+            return +acc + +cur 
+        }, 0).toFixed(2)
+        console.log('This is total',total); 
+        return(
+            <div>
+                <div className='cart-body'>
+                { this.props.products.products.length ? 
+        ( this.props.products.products.map((product, i) => {
             return(
 
                 <div key={i} className='product-card'>
@@ -32,17 +55,7 @@ class Cart extends Component {
                     </div>
                 </div>
             )
-        }) 
-        let total = this.props.products.products.map((el) => {
-            return el.price
-        }).reduce((acc, cur) => {
-            return +acc + +cur 
-        }, 0).toFixed(2)
-        console.log('This is total',total); 
-        return(
-            <div>
-                <div className='cart-body'>
-                    {this.props.products.products.length ? products : null}
+        })) : (null) }
                 </div> 
                 <StripeProvider apiKey="pk_test_zpRONBjxlVGJMjgVWn0iIBIm">
                      <div className="example">
