@@ -33,12 +33,13 @@ class Cart extends Component {
         //         </div>
         //     )
         // })) : (null) }
-        let total = this.props.products.products.map((el) => {
-            return el.price
-        }).reduce((acc, cur) => {
-            return +acc + +cur 
-        }, 0).toFixed(2)
-        console.log('This is total',total); 
+        let total = 0; 
+        // let total = this.props.products.products.map((el) => {
+        //     return el.price
+        // }).reduce((acc, cur) => {
+        //     return +acc + +cur 
+        // }, 0).toFixed(2)
+        // console.log('This is total',total); 
         return(
             <div>
                 <div className='cart-body'>
