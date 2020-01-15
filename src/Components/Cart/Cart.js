@@ -42,7 +42,7 @@ class Cart extends Component {
         return(
             <div>
                 <div className='cart-body'>
-                    {products}
+                    {this.props.products.products.length ? products : null}
                 </div> 
                 <StripeProvider apiKey="pk_test_zpRONBjxlVGJMjgVWn0iIBIm">
                      <div className="example">
