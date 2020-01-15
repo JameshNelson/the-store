@@ -16,6 +16,8 @@
 
 
 
+
+
 /* NavBar */
 .nav-bar {
   height: 50px; 
@@ -34,6 +36,8 @@
   margin-left: 10px; 
   color: white;  
 }
+
+
 /* NavBar */
 
 /* DashBoard */
@@ -93,3 +97,48 @@
 }
 /* Login/Register */
 
+/* Cart */
+
+.cart-body{
+  padding-left: 500px; 
+  padding-right: 543px; 
+}
+
+/* Cart */
+
+
+@media (min-width: 990px){
+  .menu-button{
+    display: none; 
+  }
+
+  
+}
+
+@media (max-width: 375px){
+  .nav-button{
+    display: none; 
+  }
+
+  .store{
+    font-size: 12px; 
+  }
+
+  .product-info > button{
+    font-size: 20px;
+    display: flex; 
+  }
+
+  .login-button{
+    font-size: 20px; 
+  }
+
+  .register-button{
+    font-size: 20px; 
+  }
+
+  .cart-body{
+    padding-left:35px; 
+    padding-right: 34px; 
+  }
+}

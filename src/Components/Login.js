@@ -62,7 +62,7 @@ class Login extends Component {
 
                     <div className="login-buttons">
                         <button onClick={this.handleLogin} className='login-button'>Log In</button>
-                        <button onClick={this.handleRegister}>Register</button>
+                        <button onClick={this.handleRegister} className='register-button'>Register</button>
                     </div>
                 </div>
             </div>

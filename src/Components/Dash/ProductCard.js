@@ -13,14 +13,18 @@ class ProductCard extends Component {
         this.props.getProducts()
     }
 
-    addToCart = (id, price) => {
-        axios.post('/api/cart', {
-            
-        })
+    addToCart = (id) => {
+        console.log("product id",id)
+        axios.put(`/api/cart/:${id}`, {
+            product_id: id
+        }).then( res => {
+            window.alert('Added to Cart')
+        }).catch(err => console.log(err))
     }
 
     render(){
         console.log('dashboard props', this.props.products.products)
+        console.log('user info', this.props)
             const products = this.props.products.products.map((product, i) => {
             return(
                 <div key={i} className='product-card'>
@@ -28,7 +32,7 @@ class ProductCard extends Component {
                     <div className='product-info'>
                         <p>{product.product_name}</p>
                         <p>Price: ${product.price}</p>
-                        <button>Add to Cart</button>
+                        <button onClick={() => this.addToCart(product.product_id)}>Add to Cart</button>
                     </div>
                 </div>
             )
@@ -44,7 +48,7 @@ class ProductCard extends Component {
 }
 
 const mapStateToProps = (reduxState) => {
-    console.log(reduxState)
+    console.log("This is state", reduxState)
     return {products: reduxState.products}; 
 }
 

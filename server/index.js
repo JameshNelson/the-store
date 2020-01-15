@@ -33,11 +33,14 @@ app.post('/auth/logout', authCtrl.logout);
 //auth endpoints
 
 app.get('/api/products', mainCtrl.getProducts); 
-app.post('/api/cart', mainCtrl.addToCart); 
+app.put('/api/cart/:id', mainCtrl.addToCart); 
+app.get('/api/cart', mainCtrl.getCart)
+app.put('/api/cart', mainCtrl.emptyCart)
 
 
 //Stripe
 app.post("/api/payment", async (req, res) => {
+    console.log(typeof req.body.amount); 
     const {token:{id},amount} = req.body;
     try {
       let status = await stripe.charges.create({

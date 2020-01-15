@@ -5,16 +5,22 @@ module.exports = {
         db.get_products().then(products => {res.status(200).send(products)}).catch(err => res.status(500).send(err))
     },
     addToCart: (req, res) => {
-        const {customer_order_id, product_id, price} = req.body; 
+        const {product_id} = req.body; 
         const db = req.app.get('db'); 
-        db.orders.add_cart({order_id: customer_order_id, product_id, price})
+        db.order.add_cart(product_id)
         .then(res => res.sendStatus(200))
         .catch(err => res.status(500).send(err)); 
     },
     getCart: (req, res) => {
-        const {id} = req.params; 
         const db = req.app.get('db'); 
-        db.orders.get_cart(id).then(cart => {
+        db.order.get_cart().then(cart => {
+            res.status(200).send(cart)
+        })
+        .catch(err => res.status(500).send(err))
+    },
+    emptyCart:( req, res) => {
+        const db = req.app.get('db'); 
+        db.order.clear_cart().then(cart => {
             res.status(200).send(cart)
         })
         .catch(err => res.status(500).send(err))

@@ -9,9 +9,24 @@ class CheckoutForm extends Component {
       amount: 0
     }
   }
+  componentDidMount(){
+    this.changeAmount()
+  }
+  changeAmount=()=>{
+    console.log(this.props.amount); 
+    let amount = this.props.amount.split('').filter(el => {
+     return el !== '.'
+    }).join('');
+     console.log(amount); 
+    this.setState({
+      amount: +amount
+    })
+  }
 
   onOpened=()=>{
     console.log('this is opened')
+
+    this.changeAmount(); 
   }
 
   onClosed=()=>{
@@ -20,25 +35,30 @@ class CheckoutForm extends Component {
 
   onToken = (token) => {
     console.log(token)
-    let { amount } = this.state
+    let { amount } = this.props
     amount /= 100
-    console.log(amount)
+    console.log(typeof amount)
     token.card = void 0
     axios.post('/api/payment', { token, amount: this.state.amount }).then(res => {
       console.log(res)
-      alert(`Congratulations you paid Kevin ${amount}!`)
+      alert(`Payment made for ${(amount * 100).toFixed(2)}!`)
+    })
+    axios.put('/api/cart').then(res => {
+      
     })
   }
 
   render() {
-    // console.log(typeof this.state.amount)
+    console.log( this.props.amount)
+
+    
 
     return (
       <div style={{display:'flex',flexDirection:'column', alignItems:'center', marginTop:'50px'}}>
         <StripeCheckout
-          name='CLass' //header
+          name='Random Junk Store' //header
           image={imageUrl}
-          description='This is stuff going beneath the header' //subtitle - beneath header
+          description='' //subtitle - beneath header
           stripeKey={process.env.REACT_APP_STRIPE_KEY} //public key not secret key
           token={this.onToken} //fires the call back
           amount={this.state.amount} //this will be in cents
@@ -56,9 +76,7 @@ class CheckoutForm extends Component {
         >
           {/* <button>Checkout</button> */}
         </StripeCheckout>
-        <input value={this.state.amount}
-        type='number'
-        onChange={e=>this.setState({amount:+e.target.value})}/>
+        
       </div>
     )
   }
