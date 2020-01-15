@@ -33,7 +33,7 @@ class Cart extends Component {
         //         </div>
         //     )
         // })) : (null) }
-        let total = 100; 
+        let total = '100'; 
         // let total = this.props.products.products.map((el) => {
         //     return el.price
         // }).reduce((acc, cur) => {
